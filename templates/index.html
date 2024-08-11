@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Recommendation System</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1f1f1f;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #282828;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .item {
+        margin-bottom: 20px;
+        background-color: #333;
+        border-radius: 8px;
+        padding: 10px;
+        display: none;
+    }
+    .item img {
+        width: 100px;
+        vertical-align: middle;
+    }
+    .item-details {
+        display: inline-block;
+        margin-left: 20px;
+    }
+    .item-name {
+        font-weight: bold;
+        color: #fff;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    .item-price {
+        color: #999;
+        font-size: 16px;
+    }
+    .cart-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .cart-button:hover {
+        background-color: #0056b3;
+    }
+    .cart {
+        margin-top: 30px;
+        background-color: #333;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .cart-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        background-color: #444;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    .cart-item img {
+        width: 60px;
+        margin-right: 10px;
+    }
+    .cart-item-name {
+        flex-grow: 1;
+        font-weight: bold;
+        color: #fff;
+    }
+    .cart-item-price {
+        color: #999;
+    }
+    .reco {
+        display: inline-block;
+        background-color: #555;
+        color: #fff;
+        padding: 5px 10px;
+        margin: 5px;
+        border-radius: 6px;
+    }
+    .selected {
+        background-color: #007bff;
+    }
+
+    /* Style for category buttons */
+    .category-button {
+        background-color: transparent;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-right: 10px;
+        outline: none;
+        transition: background-color 0.3s;
+    }
+    .category-button:hover {
+        background-color: #444;
+    }
+</style>
+</head>
+<body>
+    <header align='center'>
+        <h1>Product Recommendation System</h1>
+        <h3>By ML Team❤️</h3>
+        <button id="kitchenBtn" class="category-button selected" onclick="showKitchen()">Kitchen</button>
+        <button id="decorBtn" class="category-button" onclick="showDecor()">Decor</button>
+    </header>
+<div class="container">
+    <div class="item kitchen">
+        <img src="../static/img/bottle.jpeg" alt="Item 1">
+        <div class="item-details">
+            <div class="item-name">KNITTED UNION FLAG HOT WATER BOTTLE</div>
+            <div class="item-price">Rs.1000.00</div>
+            <button class="cart-button" onclick="window.location.href='{{ url_for( 'predict', product='KNITTED UNION FLAG HOT WATER BOTTLE') }}';">Add</button>
+        </div>
+    </div>
+    <div class="item kitchen">
+        <img src="../static/img/cakestand.jpeg" alt="Item 2">
+        <div class="item-details">
+            <div class="item-name">MINI CAKE STAND WITH HANGING CAKES</div>
+            <div class="item-price">Rs.1500.00</div>
+            <button class="cart-button" onclick="window.location.href='{{ url_for( 'predict', product='MINI CAKE STAND WITH HANGING CAKES') }}';">Add</button>
+        </div>
+    </div>
+    <div class="item kitchen">
+        <img src="../static/img/redbox.jpeg" alt="Item 3">
+        <div class="item-details">
+            <div class="item-name">LUNCH BAG RED RETROSPOT</div>
+            <div class="item-price">Rs.2000.00</div>
+            <button class="cart-button" onclick="window.location.href='{{ url_for( 'predict', product='LUNCH BAG RED RETROSPOT') }}';">Add</button>
+        </div>
+    </div>
+    <div class="item decor" style="display: none;">
+        <img src = "../static/img/heart.jpeg" alt="Image">
+        <div class="item-details">
+            <div class="item-name">WHITE HANGING HEART T-LIGHT HOLDER</div>
+            <div class="item-price">Rs.2500.00</div>
+            <button class="cart-button" onclick="window.location.href='{{ url_for( 'predict', product='WHITE HANGING HEART T-LIGHT HOLDER') }}';">Add</button>
+        </div>
+    </div>
+    <div class="item decor" style="display: none;">
+        <img src="../static/img/candle.jpg" alt="Item 5">
+        <div class="item-details">
+            <div class="item-name">CINAMMON SET OF 9 T-LIGHTS</div>
+            <div class="item-price">Rs.300.00</div>
+            <button class="cart-button" onclick="window.location.href='{{ url_for( 'predict', product='CINAMMON SET OF 9 T-LIGHTS') }}';">Add</button>
+        </div>
+    </div>
+    <div class="item decor" style="display: none;">
+        <img src="../static/img/starbell.jpeg" alt="Item 6">
+        <div class="item-details">
+            <div class="item-name">GARLAND WITH STARS AND BELLS</div>
+            <div class="item-price">Rs.3500.00</div>
+            <button class="cart-button" onclick="window.location.href='{{ url_for( 'predict', product='GARLAND WITH STARS AND BELLS') }}';">Add</button>
+        </div>
+    </div>
+    <h4>Recommendations</h4>
+    <p class="col-12 text-center">Based on the added item, you may also like..</p> <br>
+    <p class="col-12 text-center"> 
+        <span class="reco">{{ob1}}</span> 
+        <span class="reco">{{ob2}}</span>
+        <span class="reco">{{ob3}}</span> <br>
+    </p>
+			
+</div>
+<script>
+    function showKitchen() {
+        document.querySelectorAll('.item').forEach(item => {
+            item.style.display = 'none';
+        });
+        document.querySelectorAll('.kitchen').forEach(item => {
+            item.style.display = 'block';
+        });
+        document.getElementById('kitchenBtn').classList.add('selected');
+        document.getElementById('decorBtn').classList.remove('selected');
+    }
+
+    function showDecor() {
+        document.querySelectorAll('.item').forEach(item => {
+            item.style.display = 'none';
+        });
+        document.querySelectorAll('.decor').forEach(item => {
+            item.style.display = 'block';
+        });
+        document.getElementById('kitchenBtn').classList.remove('selected');
+        document.getElementById('decorBtn').classList.add('selected');
+    }
+
+    // Initially show kitchen items
+    showKitchen();
+</script>
+</body>
+</html>
